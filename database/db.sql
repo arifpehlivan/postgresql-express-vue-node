@@ -22,7 +22,7 @@ CREATE TABLE course (
 );
 
 CREATE TABLE studentvscourse (
-    student_id INTEGER NOT REFERENCES student(id_student),
+    student_id INTEGER NOT NULL REFERENCES student(id_student),
     course_id INTEGER NOT NULL REFERENCES course(id_course)
 );
 
