@@ -19,6 +19,7 @@ console.log(__dirname);
 
 //routes
 app.use('/', require('./routes/auth.routes'));
+app.use('/professor', require('./routes/professor.routes'));
 // app.get('/', (req, res) =>{
 //     res.send('Hello World');
 // })
