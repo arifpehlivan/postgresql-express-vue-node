@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.post('/course', professor.createCourse);
 
+router.get('/course/:id_c', professor.readCourse);
+
 module.exports = router;

@@ -19,4 +19,17 @@ professor.createCourse = async (req, res) =>{
     }
 };
 
+professor.readCourse = async (req, res) =>{
+    const id = req.params.id_c;
+    try {
+        const course = await (await pool.query('SELECT * FROM course WHERE id_c=$1', [id])).rows[0];
+        res.status(200).json({course});
+    } catch (error) {
+        res.status(500).json({
+            message: 'An error has occured',
+            error
+        })
+    }
+};
+
 module.exports = professor;

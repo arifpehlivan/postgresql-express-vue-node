@@ -13,9 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(fileUpload({useTempFiles: true}));
-app.use(history());
-app.use(express.static(path.join(__dirname, 'public')));
-console.log(__dirname);
+
+// console.log(__dirname);
 
 //routes
 app.use('/', require('./routes/auth.routes'));
@@ -23,6 +22,9 @@ app.use('/professor', require('./routes/professor.routes'));
 // app.get('/', (req, res) =>{
 //     res.send('Hello World');
 // })
+
+app.use(history());
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 
