@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/arifpehlivan/postgresql-express-vue-node#readme",
   "dependencies": {
+    "cloudinary": "^1.27.1",
     "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
