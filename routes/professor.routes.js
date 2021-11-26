@@ -9,4 +9,6 @@ router.get('/course/:id_c', professor.readCourse);
 
 router.put('/course/:id_c', professor.updateCourse);
 
+router.delete('/course/:id_c', professor.deleteCourse);
+
 module.exports = router;
