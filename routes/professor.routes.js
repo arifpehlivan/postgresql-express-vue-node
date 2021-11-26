@@ -11,4 +11,6 @@ router.put('/course/:id_c', professor.updateCourse);
 
 router.delete('/course/:id_c', professor.deleteCourse);
 
+router.post('/my-courses', professor.getCourse);
+
 module.exports = router;

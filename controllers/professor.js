@@ -90,4 +90,18 @@ professor.deleteCourse = async (req, res) => {
 
 };
 
+professor.getCourse = async (req, res) => {
+    const {id} = req.body;
+    try {
+        const courses = await (await pool.query('SELECT * FROM course WHERE p_id=$1',[id])).rows;
+        res.status(200).json(courses);
+    } catch (error) {
+        res.status(500).json({
+            message: 'An error has occured',
+            error
+        })
+    }
+
+};
+
 module.exports = professor;
