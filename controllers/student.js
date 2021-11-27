@@ -12,6 +12,18 @@ student.getCourses = async (req, res) => {
             error
         })
     }
-}
+};
+
+// student.getMyCourses = async (req, res) => {
+//     const id = req.body.id;
+//     try {
+//         const courses = await pool.query('SELECT * FROM ')
+//     } catch (error) {
+//         res.status(500).json({
+//             message: 'An error has occured',
+//             error
+//         })
+//     }
+// };
 
 module.exports = student;
