@@ -16,4 +16,6 @@ router.post('/my-courses', professor.getCourse);
 
 router.post('/assignment/:id_c', professor.createAssignment);
 
+router.get('/course-assignments/:id_c', professor.getAssignment);
+
 module.exports = router;

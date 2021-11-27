@@ -123,6 +123,20 @@ professor.createAssignment = async (req, res) =>{
             
         })
     }
-}
+};
+
+professor.getAssignment = async (req, res) => {
+    const id_c = req.params.id_c;
+    try {
+        
+        const assignments = await (await pool.query('SELECT * FROM assignment WHERE c_id=$1', [id_c])).rows;
+        res.status(200).json(assignments);
+    } catch (error) {
+        res.status(500).json({
+            message: 'An error has occured',
+            error
+        })
+    }
+};
 
 module.exports = professor;
