@@ -19,6 +19,7 @@ app.use(fileUpload({useTempFiles: true}));
 //routes
 app.use('/', require('./routes/auth.routes'));
 app.use('/professor', require('./routes/professor.routes'));
+app.use('/student', require('./routes/student.routes'));
 // app.get('/', (req, res) =>{
 //     res.send('Hello World');
 // })
