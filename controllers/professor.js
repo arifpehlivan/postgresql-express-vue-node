@@ -139,4 +139,17 @@ professor.getAssignment = async (req, res) => {
     }
 };
 
+professor.getDeliveries = async (req, res) => {
+    const id_a = req.params.id_a;
+    try {
+        const deliveries = await ( await pool.query('SELECT * FROM delivery WHERE a_id=$1', [id_a])).rows;
+        res.status(200).json(deliveries);
+    } catch (error) {
+        res.status(500).json({
+            message: 'An error has occured',
+            error
+        })
+    }
+}
+
 module.exports = professor;
