@@ -1,12 +1,15 @@
 <template>
   <v-container>
+    <v-app-bar app color="primary" dark>
+      <v-toolbar-title>PEVN</v-toolbar-title>
+    </v-app-bar>
     <v-alert text v-model="alert.show" :type="alert.type" dismissible>{{alert.message}}</v-alert>
     <v-row justify="center">
-      <v-col class="text-center" md="2" sm="2"  @click="suForm=true">
-        <v-btn class="primary">Sign up</v-btn>
+      <v-col class="text-center" md="2" sm="2"  >
+        <v-btn class="primary" @click="suForm=true">Sign up</v-btn>
       </v-col>
-      <v-col class="text-center"  md="2" sm="2" @click="suForm=false">
-        <v-btn class="success">Sign in</v-btn>
+      <v-col class="text-center"  md="2" sm="2" >
+        <v-btn class="success" @click="suForm=false">Sign in</v-btn>
       </v-col>
     </v-row>
     <v-row justify="center">
@@ -133,11 +136,7 @@ export default {
             }
           }else{
             sessionStorage.setItem('session', JSON.stringfy(res.data));
-            this.alert = {
-              show: true,
-              type: 'success',
-              message: 'Welcome'
-            }
+            this.$router.push('/profile');
           }
         } catch (error) {
           this.alert = {
