@@ -135,7 +135,7 @@ export default {
               message: res.data.message
             }
           }else{
-            sessionStorage.setItem('session', JSON.stringfy(res.data));
+            sessionStorage.setItem('session', JSON.stringify(res.data));
             this.$router.push('/profile');
           }
         } catch (error) {
