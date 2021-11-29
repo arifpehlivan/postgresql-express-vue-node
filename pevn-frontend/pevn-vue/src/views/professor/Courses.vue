@@ -11,7 +11,7 @@
         <v-card-title>{{course.c_name}}</v-card-title>
         <v-card-subtitle>{{course.c_description}}</v-card-subtitle>
         <v-card-actions>
-            <v-btn color="blue" small dark fab><v-icon>mdi-pencil</v-icon></v-btn>
+            <v-btn color="blue" small dark fab @click="readCourse(course.id_c)"><v-icon>mdi-pencil</v-icon></v-btn>
             <v-btn color="red" small dark fab><v-icon>mdi-delete</v-icon></v-btn>
         </v-card-actions>
       </v-card>
@@ -49,6 +49,7 @@ export default {
         professor: {},
         coursesList: [],
         courseToAdd: {},
+        courseToEdit: {},
         add: false
     }),
     methods:{
@@ -69,6 +70,15 @@ export default {
           } catch (error) {
             console.log(error);
           }
+        }
+      },
+      async readCourse(id_c){
+        try {
+          const res = await this.axios.get(`/professor/course/${id_c}`);
+          this.courseToEdit = res.data.course;
+          console.log(this.courseToEdit);
+        } catch (error) {
+          console.log(error);
         }
       }
     },
