@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <v-alert text v-model="alert.show" :type="alert.type" dismissible>{{alert.message}}</v-alert>
     <h1 class="font-weight-light">My courses</h1>
     <v-row justify="center">
       <v-card class="ma-3" max-width="344" v-for="course in coursesList" :key="course.id_c">
@@ -7,23 +8,70 @@
           src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
           height="200px"
         ></v-img>
-        <v-card-title>{{course.name}}</v-card-title>
-        <v-card-subtitle>{{course.description}}</v-card-subtitle>
+        <v-card-title>{{course.c_name}}</v-card-title>
+        <v-card-subtitle>{{course.c_description}}</v-card-subtitle>
         <v-card-actions>
             <v-btn color="blue" small dark fab><v-icon>mdi-pencil</v-icon></v-btn>
             <v-btn color="red" small dark fab><v-icon>mdi-delete</v-icon></v-btn>
         </v-card-actions>
       </v-card>
     </v-row>
+    <v-dialog v-model="add" width="450">
+      <v-card>
+        <v-card-title>Create a course</v-card-title>
+        <v-card-text>
+          <v-form ref="addForm" @submit.prevent="addCourse()" class="ma-3">
+            <v-text-field
+            prepend-icon="mdi-biohazard"
+            label="name"
+            :rules="[(v) => !!v || 'Name is required']"
+            v-model="courseToAdd.c_name">
+            </v-text-field>
+            <v-textarea
+            prepend-icon="mdi-bike"
+            label="Description"
+            :rules="[(v) => !!v|| 'Description is required']"
+            v-model="courseToAdd.c_description">
+            </v-textarea>
+            <v-btn block class="success mt-3" type="submit">add</v-btn>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+    <v-btn @click="add=true" color="red" large right fixed bottom fab dark><v-icon>mdi-plus</v-icon></v-btn>
   </v-container>
 </template>
 
 <script>
 export default {
     data: () => ({
+        alert:{show: false},
         professor: {},
-        coursesList: []
+        coursesList: [],
+        courseToAdd: {},
+        add: false
     }),
+    methods:{
+      async addCourse(){
+        let valid = this.$refs.addForm.validate();
+        if(valid){
+          this.courseToAdd.id = this.professor.id;
+          try {
+            const res = await this.axios.post('/professor/course', this.courseToAdd);
+            this.coursesList.push(res.data.course);
+            this.$refs.addForm.reset();
+            this.add=false;
+            this.alet = {
+              show: true,
+              type: 'success',
+              message: res.data.message
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+    },
     created: async function (){
         this.professor = JSON.parse(sessionStorage.getItem("session"));
         if(this.professor==null){
