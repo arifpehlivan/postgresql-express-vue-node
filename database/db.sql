@@ -1,43 +1,49 @@
 CREATE DATABASE pevn;
 
-CREATE TABLE proffesor (
-    id_prof SERIAL PRIMARY KEY,
-    prof_name TEXT NOT NULL,
-    prof_email TEXT NOT NULL,
-    prof_password TEXT NOT NULL
+CREATE TABLE professor  (
+    id_p SERIAL PRIMARY KEY,
+    p_name  TEXT NOT NULL,
+    p_email  TEXT NOT NULL UNIQUE,
+    p_password  TEXT NOT NULL
 );
 
 CREATE TABLE student (
-    id_student SERIAL PRIMARY KEY,
-    student_name TEXT NOT NULL,
-    student_email TEXT NOT NULL,
-    student_password TEXT NOT NULL
+    id_s SERIAL PRIMARY KEY,
+    s_name TEXT NOT NULL,
+    s_email TEXT NOT NULL UNIQUE,
+    s_password TEXT NOT NULL
 );
 
 CREATE TABLE course (
-    id_course SERIAL PRIMARY KEY,
-    prof_id INTEGER REFERENCES professor(id_prof),
-    course_name TEXT NOT NULL,
-    course_description TEXT NOT NULL
+    id_c SERIAL PRIMARY KEY,
+    p_id INTEGER REFERENCES professor(id_p),
+    c_name TEXT NOT NULL,
+    c_description TEXT NOT NULL
 );
 
 CREATE TABLE studentvscourse (
-    student_id INTEGER NOT NULL REFERENCES student(id_student),
-    course_id INTEGER NOT NULL REFERENCES course(id_course)
+    s_id INTEGER NOT NULL REFERENCES student(id_s),
+    c_id INTEGER NOT NULL REFERENCES course(id_c)
 );
 
+CREATE VIEW professorvscourse 
+AS 
+    SELECT * 
+    FROM course JOIN (SELECT p_name, p_email, id_p 
+        FROM professor) AS p ON p_id=id_p;
+
 CREATE TABLE assigment (
-    id_assigment SERIAL PRIMARY KEY,
-    course_id INTEGER NOT NULL REFERENCES course(id_course),
-    assigment_name TEXT NOT NULL,
-    assigment_description TEXT,
-    assigment_file TEXT NOT NULL
+    id_a SERIAL PRIMARY KEY,
+    c_id INTEGER NOT NULL REFERENCES course(id_c),
+    a_name TEXT NOT NULL,
+    a_description TEXT,
+    a_file TEXT NOT NULL
 );
 
 CREATE TABLE delivery (
-    id_delivery SERIAL PRIMARY KEY,
-    assigment_id INTEGER REFERENCES assigment(id_assigment),
-    student_id INTEGER REFERENCES student(id_student),
-    delivery_file TEXT NOT NULL,
-    delivery_filename TEXT
+    id_d SERIAL PRIMARY KEY,
+    a_id INTEGER REFERENCES assigment(id_a),
+    s_id INTEGER REFERENCES student(id_s),
+    d_file TEXT NOT NULL,
+    d_filename TEXT
 );
