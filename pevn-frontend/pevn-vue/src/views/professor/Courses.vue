@@ -24,6 +24,8 @@
           <v-btn color="red" small dark fab @click="deleteCourse(course.id_c)"
             ><v-icon>mdi-delete</v-icon></v-btn
           >
+          <v-spacer></v-spacer>
+          <v-btn color="purple" text>assignment</v-btn>
         </v-card-actions>
       </v-card>
     </v-row>

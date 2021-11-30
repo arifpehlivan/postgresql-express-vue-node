@@ -12,13 +12,10 @@ professor.createCourse = async (req, res) => {
     } = req.body;
     try {
         await pool.query('INSERT INTO course (p_id, c_name, c_description) VALUES ($1, $2, $3)', [id, c_name, c_description]);
+        const course = await (await pool.query('SELECT * FROM course ORDER BY id_c DESC LIMIT 1')).rows;
         res.status(200).json({
             message: 'Successful added course',
-            course: {
-                id,
-                c_name,
-                c_description
-            }
+            course
         })
     } catch (error) {
         res.status(500).json({
