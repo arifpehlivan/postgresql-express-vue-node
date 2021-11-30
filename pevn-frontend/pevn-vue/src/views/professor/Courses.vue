@@ -12,7 +12,7 @@
         <v-card-subtitle>{{course.c_description}}</v-card-subtitle>
         <v-card-actions>
             <v-btn color="blue" small dark fab @click="readCourse(course.id_c)"><v-icon>mdi-pencil</v-icon></v-btn>
-            <v-btn color="red" small dark fab><v-icon>mdi-delete</v-icon></v-btn>
+            <v-btn color="red" small dark fab @click="deleteCourse(course.id_c)"><v-icon>mdi-delete</v-icon></v-btn>
         </v-card-actions>
       </v-card>
     </v-row>
@@ -117,6 +117,19 @@ export default {
               type: "success",
               message: res.data.message
             };
+        }
+      },async deleteCourse(id_c){
+        try {
+          const res = await this.axios.delete(`/professor/course/${id_c}`);
+          const index = this.coursesList.findIndex(c => c.id_c == id_c);
+          this.coursesList.splice(index, 1);
+          this.alert = {
+            show: true,
+            type: 'info',
+            message: res.data.message
+          }
+        } catch (error) {
+          console.log(error);
         }
       }
     },
