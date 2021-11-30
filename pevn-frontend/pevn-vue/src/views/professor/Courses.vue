@@ -38,6 +38,29 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="edit" width="450">
+      <v-card>
+        <v-card-title>Update a course</v-card-title>
+        <v-card-text>
+          <v-form ref="editForm" @submit.prevent="editCourse()" class="ma-3">
+            <v-text-field
+            prepend-icon="mdi-biohazard"
+            label="name"
+            :rules="[(v) => !!v || 'Name is required']"
+            v-model="courseToEdit.c_name">
+            </v-text-field>
+            <v-textarea
+            prepend-icon="mdi-bike"
+            label="Description"
+            :rules="[(v) => !!v|| 'Description is required']"
+            v-model="courseToEdit.c_description">
+            </v-textarea>
+            <v-btn block class="info mt-3" type="submit">update</v-btn>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
     <v-btn @click="add=true" color="red" large right fixed bottom fab dark><v-icon>mdi-plus</v-icon></v-btn>
   </v-container>
 </template>
@@ -50,7 +73,8 @@ export default {
         coursesList: [],
         courseToAdd: {},
         courseToEdit: {},
-        add: false
+        add: false,
+        edit: false
     }),
     methods:{
       async addCourse(){
@@ -76,9 +100,23 @@ export default {
         try {
           const res = await this.axios.get(`/professor/course/${id_c}`);
           this.courseToEdit = res.data.course;
-          console.log(this.courseToEdit);
+          this.edit = true;
         } catch (error) {
           console.log(error);
+        }
+      },
+      async editCourse(){
+        let valid = this.$refs.editForm.validate();
+        if(valid){
+            const res = await this.axios.put(`/professor/course/${this.courseToEdit.id_c}`, this.courseToEdit);
+            const index = this.coursesList.findIndex(c => c.id_c == this.courseToEdit.id_c);
+            this.coursesList[index] = this.courseToEdit;
+            this.edit = false;
+            this.alert = {
+              show: true,
+              type: "success",
+              message: res.data.message
+            };
         }
       }
     },
