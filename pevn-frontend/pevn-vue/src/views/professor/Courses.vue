@@ -25,7 +25,7 @@
             ><v-icon>mdi-delete</v-icon></v-btn
           >
           <v-spacer></v-spacer>
-          <v-btn color="purple" text>assignment</v-btn>
+          <v-btn color="purple" text @click="$router.push(`/professor/assignments/${course.id_c}`)">assignment</v-btn>
         </v-card-actions>
       </v-card>
     </v-row>
