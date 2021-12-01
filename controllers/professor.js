@@ -105,12 +105,13 @@ professor.getCourse = async (req, res) => {
 professor.createAssignment = async (req, res) =>{
     const id_c = req.params.id_c;
     const {a_name, a_description} = req.body;
-    const file = await cloudinary(req.files.a_file.tempFilePath);
+    const a_file = await cloudinary(req.files.a_file.tempFilePath);
     try {
-        await pool.query('INSERT INTO assignment (c_id, a_name, a_description, a_file) VALUES ($1, $2, $3, $4)', [id_c, a_name, a_description, file]);
+        await pool.query('INSERT INTO assignment (c_id, a_name, a_description, a_file) VALUES ($1, $2, $3, $4)', [id_c, a_name, a_description, a_file]);
+        const assignment = await (await pool.query('SELECT * FROM assignment ORDER BY id_a DESC LIMIT 1')).rows[0];
         res.status(200).json({
             message: 'Succesful added assignment',
-            assignment: {a_name, a_description, file}
+            assignment
         })
     } catch (error) {
         console.log(error);

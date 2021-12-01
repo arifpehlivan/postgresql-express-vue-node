@@ -1,13 +1,13 @@
 <template>
   <v-container class="text-center">
-      <v-alert text v-model="alert.show" :type="alert.type" dismissible>{{
+      <v-alert calss="text-start" text v-model="alert.show" :type="alert.type" dismissible>{{
       alert.message
     }}</v-alert>
     <h1 class="font-weight-light">{{ course.c_name }}</h1>
     <h2 class="font-weight-thin">{{ course.c_description }}</h2>
     <v-row justify="center">
       <v-col md="9" sm="12">
-        <v-simple-table>
+        <v-simple-table fixed-header>
           <thead>
             <tr>
               <th class="text-center">Name</th>
@@ -20,9 +20,10 @@
             <tr v-for="assignment in assignmentsList" :key="assignment.id_a">
               <td>{{assignment.a_name}}</td>
               <td>{{assignment.a_description}}</td>
-              <td><v-icon @click="open(assidnment.a_file)">mdi-file-pdf-box</v-icon></td>
+              <td><v-icon @click="open(assignment.a_file)">mdi-file-pdf-box</v-icon></td>
               <td>
                 <v-icon color="cyan darken-1"
+                @click="getDeliveries(assignment.id_a)"
                   >mdi-book-open-page-variant</v-icon
                 >
               </td>
@@ -111,6 +112,14 @@ export default {
               } catch (error) {
                   console.log(error);
               }
+          }
+      },
+      async getDeliveries(id_a){
+          try {
+              const res = await this.axios.get(`/professor/deliveries/${id_a}`);
+              console.log(res.data);
+          } catch (error) {
+              console.log(error);
           }
       }
   },
