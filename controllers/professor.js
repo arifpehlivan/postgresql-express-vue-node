@@ -122,7 +122,7 @@ professor.createAssignment = async (req, res) =>{
     }
 };
 
-professor.getAssignment = async (req, res) => {
+professor.getAssignments = async (req, res) => {
     const id_c = req.params.id_c;
     try {
         

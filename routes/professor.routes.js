@@ -16,7 +16,7 @@ router.post('/my-courses', professor.getCourse);
 
 router.post('/assignment/:id_c', professor.createAssignment);
 
-router.get('/course-assignments/:id_c', professor.getAssignment);
+router.get('/course-assignments/:id_c', professor.getAssignments);
 
 
 router.get('/deliveries/:id_a', professor.getDeliveries);
